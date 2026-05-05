@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function App() {
   const [apiKey, setApiKey] = useState("user1");
   const [data, setData] = useState(null);
@@ -11,15 +13,12 @@ export default function App() {
     setStatus("");
 
     try {
-      const res = await fetch(
-        "https://api-rate-limiter-xknt.onrender.com/api/test",
-        {
-          method: "GET",
-          headers: {
-            "X-API-KEY": apiKey,
-          },
-        }
-      );
+      const res = await fetch(`${API_URL}/api/test`, {
+        method: "GET",
+        headers: {
+          "X-API-KEY": apiKey,
+        },
+      });
 
       if (res.status === 429) {
         setStatus("RATE_LIMITED");
@@ -45,15 +44,12 @@ export default function App() {
 
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(
-          "https://api-rate-limiter-xknt.onrender.com/api/test",
-          {
-            method: "GET",
-            headers: {
-              "X-API-KEY": apiKey,
-            },
-          }
-        );
+        const res = await fetch(`${API_URL}/api/test`, {
+          method: "GET",
+          headers: {
+            "X-API-KEY": apiKey,
+          },
+        });
 
         if (res.status === 200) {
           const json = await res.json();
@@ -137,7 +133,7 @@ const styles = {
   },
   title: {
     marginBottom: "25px",
-    color: "#1e3a8a", // deep blue
+    color: "#1e3a8a",
     fontWeight: "600",
     letterSpacing: "0.5px",
   },
