@@ -2,7 +2,7 @@
 
 ## 🌐 Live Demo
 
-👉 Frontend (Vercel): https://your-vercel-link.vercel.app
+👉 Frontend (Vercel): https://api-rate-limiter-ui.vercel.app
 👉 Backend (Render): https://api-rate-limiter-xknt.onrender.com
 
 ---
