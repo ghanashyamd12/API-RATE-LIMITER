@@ -8,6 +8,9 @@ export default function App() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ Tracks first successful backend response
+  const [initialized, setInitialized] = useState(false);
+
   const callApi = async () => {
     setLoading(true);
     setStatus("");
@@ -28,8 +31,13 @@ export default function App() {
       }
 
       const json = await res.json();
+
       setData(json);
       setStatus("SUCCESS");
+
+      // ✅ Hide cold start message after first success
+      setInitialized(true);
+
     } catch (err) {
       setStatus("ERROR");
       setData(null);
@@ -81,6 +89,13 @@ export default function App() {
         </button>
       </div>
 
+      {/* ✅ Cold start message */}
+      {!initialized && (
+        <p style={styles.note}>
+          Initial response may take a few seconds due to Render free-tier cold start.
+        </p>
+      )}
+
       {status && (
         <div
           style={{
@@ -131,12 +146,14 @@ const styles = {
     background: "linear-gradient(to right, #eef2ff, #f8fafc)",
     minHeight: "100vh",
   },
+
   title: {
     marginBottom: "25px",
     color: "#1e3a8a",
     fontWeight: "600",
     letterSpacing: "0.5px",
   },
+
   card: {
     background: "#ffffff",
     padding: "20px",
@@ -145,13 +162,16 @@ const styles = {
     width: "320px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
   },
+
   input: {
     padding: "10px",
     width: "100%",
     marginBottom: "10px",
     borderRadius: "6px",
     border: "1px solid #cbd5e1",
+    fontSize: "15px",
   },
+
   button: {
     padding: "10px",
     width: "100%",
@@ -161,17 +181,29 @@ const styles = {
     color: "white",
     cursor: "pointer",
     fontWeight: "500",
+    fontSize: "15px",
   },
+
+  // ✅ New styling for cold start note
+  note: {
+    fontSize: "13px",
+    color: "#64748b",
+    marginTop: "-2px",
+    marginBottom: "10px",
+  },
+
   status: {
     marginTop: "10px",
     fontWeight: "600",
   },
+
   progressContainer: {
     background: "#e2e8f0",
     borderRadius: "6px",
     height: "8px",
     marginTop: "10px",
   },
+
   progressBar: {
     height: "8px",
     background: "#2563eb",
